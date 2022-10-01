@@ -8,6 +8,9 @@ export const _devGatewayDidResolveQueryPlan = (options: {
   [key: string]: any;
 }): void => {
   if (options.requestContext.operationName !== 'IntrospectionQuery') {
+    console.log('========================================');
+    console.log(options.requestContext.query);
+    console.log('========================================');
     console.log(serializeQueryPlan(options.queryPlan));
   }
 };

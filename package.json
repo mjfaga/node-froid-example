@@ -13,8 +13,8 @@
     "start": "concurrently \"yarn:start:*\"",
     "start:authors": "ts-node ./src/sample/authors/index.ts",
     "start:books": "ts-node ./src/sample/books/index.ts",
-    "start:froid": "ts-node ./src/sample/froid.ts",
-    "start:gateway": "APOLLO_KEY=$(cat .apollo-key) yarn ts-node ./src/sample/gateway.ts",
+    "start:froid": "ts-node ./src/sample/froid/index.ts",
+    "start:gateway": "ts-node ./src/sample/gateway/index.ts",
     "ts:check": "tsc --noEmit"
   },
   "repository": {

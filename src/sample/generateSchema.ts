@@ -15,4 +15,4 @@ const schemaAst = generateFroidSchema(subgraphSchemaMap, froidSubgraphName, {
 });
 
 // persist results to a file to use with rover publish
-fs.writeFileSync('schema.graphql', print(schemaAst));
+fs.writeFileSync('./src/sample/froid/schema.graphql', print(schemaAst));
