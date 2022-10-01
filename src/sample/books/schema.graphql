@@ -1,0 +1,96 @@
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.0"
+    import: ["@key", "@tag", "@inaccessible"]
+  )
+
+type Query {
+  """
+  Returns a cursor-based list of books, filterable by Genre; if no filter is provided, Books for all Genre's are returned
+  """
+  booksByGenreCursorConnection(
+    first: Int
+    after: String
+    before: String
+    last: Int
+    genre: Genre = ALL
+  ): BooksCursorConnection! @tag(name: "public")
+}
+
+"""
+A written work or composition and its information
+"""
+type Book @key(fields: "bookId") {
+  """
+  The unique identifer for this author in context of other authors
+  """
+  bookId: Int! @inaccessible
+  """
+  The name for the work that is chosen by the author
+  """
+  title: String! @tag(name: "public")
+  """
+  A description or summary of the book
+  """
+  description: String @tag(name: "public")
+  """
+  The year the book was published
+  """
+  yearPublished: Int @tag(name: "public")
+  """
+  The Genre of the Book
+  """
+  genre: Genre @tag(name: "public")
+  """
+  Books that are considered to be similar to the current book
+  """
+  similarBooks: [Book!]! @tag(name: "public")
+  """
+  The author of the book
+  """
+  author: Author @tag(name: "public")
+}
+
+type Author @key(fields: "authorId") {
+  authorId: Int!
+}
+
+enum Genre @tag(name: "public") {
+  ALL
+  FICTION
+  NON_FICTION
+}
+
+type PageInfo @tag(name: "public") {
+  "When paginating forwards, are there anymore items?"
+  hasNextPage: Boolean!
+  "When paginating backwards, are there anymore items?"
+  hasPreviousPage: Boolean!
+  "When paginating backwards, the cursor value to continue."
+  startCursor: String
+  "When paginating forwards, the cursor value to continue."
+  endCursor: String
+}
+
+type BooksEdge @tag(name: "public") {
+  "The item at the end of the edge"
+  node: Book
+  "A cursor for use in pagination"
+  cursor: String
+}
+
+type BooksCursorConnection @tag(name: "public") {
+  pageInfo: PageInfo!
+  edges: [BooksEdge]
+  totalCount: Int
+}
+
+type BooksPageConnection @tag(name: "public") {
+  edges: [BooksEdge]
+  "Current page number"
+  pageNumber: Int!
+  "Total number of pages"
+  totalPages: Int!
+  limit: Int!
+  totalCount: Int
+}

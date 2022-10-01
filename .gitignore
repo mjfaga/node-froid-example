@@ -1,0 +1,5 @@
+node_modules
+dist
+test-report.xml
+.apollo-key
+schema.graphql
