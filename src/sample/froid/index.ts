@@ -23,8 +23,7 @@ app.post('/graphql', async (req, res) => {
         return Buffer.from(value).toString('base64');
       },
       decode(value) {
-        const decoded = Buffer.from(value).toString('ascii');
-        return JSON.parse(decoded);
+        return Buffer.from(value).toString('ascii');
       },
     };
   }
