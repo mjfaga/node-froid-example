@@ -8,10 +8,13 @@
 - [Getting Started](#getting-started)
   - [Installation](#installation)
   - [Generating the Froid schema](#generating-the-froid-schema)
+  - [Setting up your Managed Federation Graph](#setting-up-your-managed-federation-graph)
   - [Running the demo](#running-the-demo)
-- [Sample Query](#sample-query)
-  - [Query](#query)
-  - [Variables](#variables)
+- [Sample Queries](#sample-queries)
+  - [Reviews Connection Query](#reviews-connection-query)
+    - [Variables](#variables)
+  - [`node` Query](#node-query)
+    - [Variables](#variables-1)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

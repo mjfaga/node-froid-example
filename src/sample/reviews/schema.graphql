@@ -7,23 +7,23 @@ extend schema
 """
 A critical appraisal of a Marketplace Listing
 """
-type MarketplaceListingReview @key(fields: "reviewId") @tag(name: "public") {
+type MarketplaceListingReview @key(fields: "reviewId") {
   """
   The unique identifer for this review across all other reviews
   """
-  reviewId: Int! @inaccessible
+  reviewId: Int!
   """
   The title given to the review by the author
   """
-  title: String
+  title: String @tag(name: "public")
   """
   The rating of the review from 1-5, where 1 is poor and 5 is excellent
   """
-  rating: MarketplaceListingReviewRating!
+  rating: MarketplaceListingReviewRating! @tag(name: "public")
   """
   The review body, description and additional detail
   """
-  body: String
+  body: String @tag(name: "public")
 }
 
 type MarketplaceListing @key(fields: "listingId") {
