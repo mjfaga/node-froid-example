@@ -3,19 +3,8 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import {ApolloServer} from 'apollo-server-express';
-import {ApolloGateway} from '@apollo/gateway';
+import {ApolloGateway, RemoteGraphQLDataSource} from '@apollo/gateway';
 import {serializeQueryPlan} from '@apollo/query-planner';
-
-export const _devGatewayDidResolveQueryPlan = (options: {
-  [key: string]: any;
-}): void => {
-  if (options.requestContext.operationName !== 'IntrospectionQuery') {
-    console.log('========================================');
-    console.log(options.requestContext.query);
-    console.log('========================================');
-    console.log(serializeQueryPlan(options.queryPlan));
-  }
-};
 
 const {
   APOLLO_KEY: key,
@@ -29,11 +18,31 @@ if (!key || !graphVariant || !graphId) {
   );
 }
 
+export const _devGatewayDidResolveQueryPlan = (options: {
+  [key: string]: any;
+}): void => {
+  if (options.requestContext.operationName !== 'IntrospectionQuery') {
+    console.log('========================================');
+    console.log(options.requestContext.request.query);
+    console.log('========================================');
+    console.log(serializeQueryPlan(options.queryPlan));
+  }
+};
+
+class VariantNotificationDataSource extends RemoteGraphQLDataSource {
+  willSendRequest({request}) {
+    request.http.headers.set('supergraph-variant', graphVariant);
+  }
+}
+
 (async function () {
   const app = express();
 
   const gateway = new ApolloGateway({
     experimental_didResolveQueryPlan: _devGatewayDidResolveQueryPlan,
+    buildService({url}) {
+      return new VariantNotificationDataSource({url});
+    },
   });
 
   const server = new ApolloServer({
