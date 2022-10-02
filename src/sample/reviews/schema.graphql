@@ -1,0 +1,74 @@
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.0"
+    import: ["@key", "@tag", "@inaccessible"]
+  )
+
+"""
+A critical appraisal of a Marketplace Listing
+"""
+type MarketplaceListingReview @key(fields: "reviewId") @tag(name: "public") {
+  """
+  The unique identifer for this review across all other reviews
+  """
+  reviewId: Int! @inaccessible
+  """
+  The title given to the review by the author
+  """
+  title: String
+  """
+  The rating of the review from 1-5, where 1 is poor and 5 is excellent
+  """
+  rating: MarketplaceListingReviewRating!
+  """
+  The review body, description and additional detail
+  """
+  body: String
+}
+
+type MarketplaceListing @key(fields: "listingId") {
+  listingId: String!
+  """
+  Returns a cursor-based list of reviews for the given marketplaceListing, filterable by the rating. If no rating is provided, all reviews are returned.
+  """
+  reviews(
+    first: Int
+    after: String
+    before: String
+    last: Int
+    rating: MarketplaceListingReviewRating
+  ): MarketplaceListingReviewsCursorConnection @tag(name: "public")
+}
+
+enum MarketplaceListingReviewRating @tag(name: "public") {
+  ONE
+  TWO
+  THREE
+  FOUR
+  FIVE
+}
+
+type PageInfo @tag(name: "public") {
+  "When paginating forwards, are there anymore items?"
+  hasNextPage: Boolean!
+  "When paginating backwards, are there anymore items?"
+  hasPreviousPage: Boolean!
+  "When paginating backwards, the cursor value to continue."
+  startCursor: String
+  "When paginating forwards, the cursor value to continue."
+  endCursor: String
+}
+
+type MarketplaceListingReviewEdge @tag(name: "public") {
+  "The item at the end of the edge"
+  node: MarketplaceListingReview
+  "A cursor for use in pagination"
+  cursor: String
+}
+
+type MarketplaceListingReviewsCursorConnection @tag(name: "public") {
+  pageInfo: PageInfo!
+  edges: [MarketplaceListingReviewEdge]
+  totalCount: Int!
+  averageRating: Int!
+}

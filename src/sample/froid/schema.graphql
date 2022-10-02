@@ -8,12 +8,12 @@ interface Node @tag(name: "public") {
   id: ID!
 }
 
-type Book implements Node @key(fields: "bookId") {
+type MarketplaceListing implements Node @key(fields: "listingId") {
   id: ID! @tag(name: "public")
-  bookId: Int!
+  listingId: String!
 }
 
-type Author implements Node @key(fields: "authorId") {
+type MarketplaceListingReview implements Node @key(fields: "reviewId") {
   id: ID!
-  authorId: Int!
+  reviewId: Int!
 }

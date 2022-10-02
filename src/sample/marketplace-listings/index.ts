@@ -5,7 +5,7 @@ import resolvers from './resolvers';
 import fs from 'fs';
 
 const schema = fs
-  .readFileSync('./src/sample/books/schema.graphql', 'utf8')
+  .readFileSync('./src/sample/marketplace-listings/schema.graphql', 'utf8')
   .toString();
 const typeDefs = parse(schema);
 
@@ -20,5 +20,5 @@ const server = new ApolloServer({
 });
 
 server.listen({port: 5001}).then(({url}) => {
-  console.log(`🚀 Books service ready at ${url}`);
+  console.log(`🚀 Marketplace Listings service ready at ${url}`);
 });

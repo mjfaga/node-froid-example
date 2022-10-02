@@ -4,13 +4,15 @@ export function getFederatedSchemas(): Map<string, string> {
   const map = new Map();
 
   map.set(
-    'book-service',
-    fs.readFileSync('./src/sample/books/schema.graphql').toString()
+    'marketplace-listing-service',
+    fs
+      .readFileSync('./src/sample/marketplace-listings/schema.graphql')
+      .toString()
   );
 
   map.set(
-    'author-service',
-    fs.readFileSync('./src/sample/authors/schema.graphql').toString()
+    'reviews-service',
+    fs.readFileSync('./src/sample/reviews/schema.graphql').toString()
   );
 
   return map;

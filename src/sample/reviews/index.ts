@@ -5,7 +5,7 @@ import resolvers from './resolvers';
 import fs from 'fs';
 
 const schema = fs
-  .readFileSync('./src/sample/authors/schema.graphql', 'utf8')
+  .readFileSync('./src/sample/reviews/schema.graphql', 'utf8')
   .toString();
 const typeDefs = parse(schema);
 
@@ -20,5 +20,5 @@ const server = new ApolloServer({
 });
 
 server.listen({port: 5002}).then(({url}) => {
-  console.log(`🚀 Authors service ready at ${url}`);
+  console.log(`🚀 Reviews service ready at ${url}`);
 });

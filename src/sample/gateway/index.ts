@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import * as dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import {ApolloServer} from 'apollo-server-express';
 import {ApolloGateway} from '@apollo/gateway';
@@ -15,6 +17,18 @@ export const _devGatewayDidResolveQueryPlan = (options: {
   }
 };
 
+const {
+  APOLLO_KEY: key,
+  GRAPH_VARIANT: graphVariant,
+  GRAPH_ID: graphId,
+} = process.env;
+
+if (!key || !graphVariant || !graphId) {
+  console.error(
+    'Make sure you copied the .env.example and updated the values based on the graph you set up in Apollo Studio!'
+  );
+}
+
 (async function () {
   const app = express();
 
@@ -25,9 +39,9 @@ export const _devGatewayDidResolveQueryPlan = (options: {
   const server = new ApolloServer({
     gateway,
     apollo: {
-      key: process.env.APOLLO_KEY,
-      graphVariant: 'fed2-contract',
-      graphId: 'marks-graph-6f4pcm',
+      key,
+      graphVariant,
+      graphId,
     },
   });
 

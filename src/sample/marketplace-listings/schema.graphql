@@ -1,0 +1,35 @@
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.0"
+    import: ["@key", "@tag", "@inaccessible"]
+  )
+
+type Query {
+  """
+  Returns a Marketplace Listing group for the listingId provided; if the listingId isn't found, nothing is returned
+  """
+  marketplaceListing(listingId: String!): MarketplaceListing
+    @tag(name: "public")
+}
+
+"""
+Represents a set of related skus differentiated by the choices a shopper can make in order to add the item to their cart.
+"""
+type MarketplaceListing @key(fields: "listingId") @tag(name: "public") {
+  """
+  The unique identifer for this listing across all other listings
+  """
+  listingId: String!
+  """
+  The name for the work that is chosen by the author
+  """
+  name: String!
+  """
+  A description or summary of the listing
+  """
+  description: String
+  """
+  Marketplace Listings that are considered to be similar to the current Marketplace Listing
+  """
+  similarListings: [MarketplaceListing!]!
+}

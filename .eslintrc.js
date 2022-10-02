@@ -19,7 +19,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/__tests__/**/*'],
+      files: ['**/__tests__/**/*', 'src/sample/**/*'],
       rules: {
         'jsdoc/require-jsdoc': 'off',
       },
